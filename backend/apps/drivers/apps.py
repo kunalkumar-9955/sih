@@ -1,0 +1,10 @@
+"""
+SIH26002 — Drivers app config.
+"""
+from django.apps import AppConfig
+
+
+class DriversConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apps.drivers"
+    verbose_name = "Drivers"

@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-09-11 19:30:26",
+  "platform": {
+    "system": "Windows",
+    "release": "11",
+    "machine": "AMD64",
+    "python": "3.14.5"
+  },
+  "benchmarks": {
+    "demo_readiness": {
+      "workload": "Demo Readiness Check (15 Subsystems)",
+      "dataset_size": "15 Subsystem Health Probes",
+      "mean_ms": 78.39,
+      "median_ms": 33.05,
+      "p95_ms": 271.0,
+      "min_ms": 24.83,
+      "max_ms": 271.0,
+      "samples": 5
+    },
+    "hazard_inference": {
+      "workload": "Multi-Modal Hazard Inference",
+      "dataset_size": "1 Edge Query (DB Edges: 54)",
+      "mean_ms": 3.02,
+      "median_ms": 2.69,
+      "p95_ms": 4.46,
+      "min_ms": 2.42,
+      "max_ms": 4.46,
+      "samples": 5
+    },
+    "route_calculation": {
+      "workload": "Multi-Modal Dijkstra / A* Routing",
+      "dataset_size": "Nodes: 26, Edges: 54",
+      "mean_ms": 13.18,
+      "median_ms": 12.4,
+      "p95_ms": 16.61,
+      "min_ms": 11.91,
+      "max_ms": 16.61,
+      "samples": 5
+    },
+    "eta_prediction": {
+      "workload": "Domain & Gradient-Calibrated Predictive ETA Inference",
+      "dataset_size": "145.0 km Inter-State Corridor Vector",
+      "mean_ms": 0.02,
+      "median_ms": 0.01,
+      "p95_ms": 0.04,
+      "min_ms": 0.01,
+      "max_ms": 0.04,
+      "samples": 5
+    },
+    "load_consolidation": {
+      "workload": "Dynamic Freight Load Consolidation",
+      "dataset_size": "Freight Loads: 5",
+      "mean_ms": 4.06,
+      "median_ms": 4.0,
+      "p95_ms": 4.59,
+      "min_ms": 3.75,
+      "max_ms": 4.59,
+      "samples": 5
+    },
+    "fleet_optimization": {
+      "workload": "Multi-Depot Fleet Routing & Dispatch",
+      "dataset_size": "Vehicles: 3, Loads: 5",
+      "mean_ms": 37.56,
+      "median_ms": 37.16,
+      "p95_ms": 39.57,
+      "min_ms": 36.76,
+      "max_ms": 39.57,
+      "samples": 5
+    },
+    "disruption_simulation": {
+      "workload": "Disruption Scenario Simulation & Cascade Impact",
+      "dataset_size": "Target: NH-27 Corridor, HEAVY_RAINFALL Scenario",
+      "mean_ms": 15.49,
+      "median_ms": 15.5,
+      "p95_ms": 16.19,
+      "min_ms": 14.75,
+      "max_ms": 16.19,
+      "samples": 5
+    },
+    "accessibility_calculation": {
+      "workload": "Corridor-level Accessibility Index & Scoring",
+      "dataset_size": "All 54 Edges in NER Topology",
+      "mean_ms": 5.63,
+      "median_ms": 5.56,
+      "p95_ms": 6.01,
+      "min_ms": 5.35,
+      "max_ms": 6.01,
+      "samples": 5
+    },
+    "command_center_api": {
+      "workload": "Command-Center Unified Network Operational Summary",
+      "dataset_size": "Full System Operational Snapshot",
+      "mean_ms": 0.23,
+      "median_ms": 0.12,
+      "p95_ms": 0.65,
+      "min_ms": 0.1,
+      "max_ms": 0.65,
+      "samples": 5
+    }
+  }
+}

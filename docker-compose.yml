@@ -1,0 +1,112 @@
+# ============================================================
+# SIH26002 — docker-compose.yml (local development)
+# ============================================================
+
+version: "3.9"
+
+services:
+  # ── PostgreSQL + PostGIS ──────────────────────────────────
+  db:
+    image: postgis/postgis:15-3.3
+    container_name: sih_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sih_db}
+      POSTGRES_USER: ${POSTGRES_USER:-sih_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sih_pass}
+    volumes:
+      - sih_pgdata:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sih_user} -d ${POSTGRES_DB:-sih_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ─────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: sih_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - sih_redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ── Django Backend ────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sih_backend
+    restart: unless-stopped
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate --noinput &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+      - sih_media:/app/media
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ── Celery Worker ─────────────────────────────────────────
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sih_celery
+    restart: unless-stopped
+    command: celery -A config worker -l info --concurrency 2
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ── Next.js Web Frontend ──────────────────────────────────
+  web:
+    build:
+      context: ./frontend/web
+      dockerfile: Dockerfile
+    container_name: sih_web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/web:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  sih_pgdata:
+  sih_redis_data:
+  sih_media:

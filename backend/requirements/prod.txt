@@ -1,0 +1,14 @@
+# ============================================================
+# SIH26002 — Production Requirements
+# ============================================================
+-r base.txt
+
+# WSGI server
+gunicorn==23.0.0
+
+# Production monitoring-ready
+django-prometheus==2.3.1
+sentry-sdk==2.14.0
+
+# Security
+django-csp==3.8

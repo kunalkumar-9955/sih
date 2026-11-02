@@ -1,0 +1,28 @@
+# ============================================================
+# SIH26002 — Development Requirements
+# ============================================================
+-r base.txt
+
+# Testing
+pytest==8.3.2
+pytest-django==4.9.0
+pytest-cov==5.0.0
+pytest-mock==3.14.0
+factory-boy==3.3.1
+Faker==28.4.1
+
+# Linting / Formatting
+ruff==0.6.4
+black==24.8.0
+mypy==1.11.2
+django-stubs==5.0.4
+djangorestframework-stubs==3.15.1
+
+# Development utilities
+django-debug-toolbar==4.4.6
+Werkzeug==3.0.4
+ipython==8.27.0
+
+# Type stubs
+types-python-dateutil==2.9.0.20240906
+types-Pillow==10.2.0.20240822

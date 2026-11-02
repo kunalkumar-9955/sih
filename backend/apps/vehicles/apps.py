@@ -1,0 +1,10 @@
+"""
+SIH26002 — Vehicles app config.
+"""
+from django.apps import AppConfig
+
+
+class VehiclesConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apps.vehicles"
+    verbose_name = "Vehicles"
